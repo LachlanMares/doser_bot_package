@@ -1,0 +1,12 @@
+  Header header
+  uint32 message_id
+  Pulses motor_0
+  Pulses motor_1
+  Pulses motor_2
+  Pulses motor_3
+  Pulses motor_4
+  Pulses motor_5
+  Pulses motor_6
+  Pulses motor_7
+  Pulses motor_8
+  Pulses motor_9

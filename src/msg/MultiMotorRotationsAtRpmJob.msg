@@ -1,0 +1,12 @@
+  Header header
+  uint32 message_id
+  RotationsAtRpm motor_0
+  RotationsAtRpm motor_1
+  RotationsAtRpm motor_2
+  RotationsAtRpm motor_3
+  RotationsAtRpm motor_4
+  RotationsAtRpm motor_5
+  RotationsAtRpm motor_6
+  RotationsAtRpm motor_7
+  RotationsAtRpm motor_8
+  RotationsAtRpm motor_9

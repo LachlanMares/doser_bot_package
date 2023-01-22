@@ -1,0 +1,11 @@
+uint8 motor
+uint8 direction
+uint8 use_ramping
+uint8 job_id
+
+float32 rpm
+float32 rotations
+
+uint32 ramping_steps
+---
+uint8 response
