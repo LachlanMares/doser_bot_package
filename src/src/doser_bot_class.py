@@ -946,7 +946,6 @@ class DoserBot:
             for i, motor_id in enumerate(self.motor_ids_in_use):
                 self.motor_status_dict[f'motor_{motor_id}_status'] = current_status[(i * 2) + 1]
                 self.motor_status_dict[f'motor_{motor_id}_job_id'] = current_status[(i * 2) + 2]
-                #print(motor_id, self.motor_status_dict[f'motor_{motor_id}_status'])
             return True
 
         else:

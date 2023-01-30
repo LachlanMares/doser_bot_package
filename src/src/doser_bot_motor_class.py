@@ -21,11 +21,12 @@ class Motor:
         self.enabled = False
         self.running = False
         self.sleep = False
-
         self.job_id = 0
+        self.pulses_remaining = 0
+
+
         self.status_msg_job_id = 0
         self.command_job_id = 0
-        self.pulses_remaining = 0
         self.job_in_progress = False
         self.job_status = 0
         self.first_status_received = False
