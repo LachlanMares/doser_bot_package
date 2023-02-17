@@ -1,0 +1,14 @@
+<launch>
+
+    <param name="dynamic_reconfigure_node_name" type="string" value="dynamic_node" />
+    
+    <!-- Launch our dynamic node (c++) or (python)-->
+    <node name="dynamic_node" pkg="doser_bot_package" type="dynamic_node" output="screen" args=""/>
+ 
+    <!-- Launch the rqt_reconfigure gui. Use only when testing not live on robot -->
+    <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
+
+    <!-- ROS node to listen for changes in dynamic parameters parameters -->
+    <node pkg="doser_bot_package" type="selections_node" name="selections_node" output="screen"/>
+
+</launch>
