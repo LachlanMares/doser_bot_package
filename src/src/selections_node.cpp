@@ -15,6 +15,9 @@ class HandleSelections {
         // dynamic reconfigure
         ParameterLookUp pl;
 
+        // Variables 
+        dynamic_multi_motor_struct _mulit_motor_struct;
+
         // Publishers
         ros::Publisher motor_job_publisher;
 
@@ -26,6 +29,9 @@ class HandleSelections {
             // Publishers
             motor_job_publisher = _nh.advertise<doser_bot_package::MultiMotorRotationsAtRpmJob>(motor_topic_str, 1);
 
+            // Variables
+            _mulit_motor_struct = pl.getMotorParameters();
+
             // Timers
             timer = _nh.createTimer(ros::Duration(0.1), &HandleSelections::timerCallback, this);
 
@@ -33,6 +39,21 @@ class HandleSelections {
 
     void timerCallback(const ros::TimerEvent &) {    
         dynamic_selection_values_struct _selection_parameters = pl.getSelectionValues();
+
+        if(new_selection_parameters.make_it_so) {
+            _mulit_motor_struct = pl.getMotorParameters();
+
+            doser_bot_package::MultiMotorRotationsAtRpmJob multi_motor_job;
+            multi_motor_job.header.stamp = ros::Time::now();
+
+            for(int i=0; i<10; i++) {
+                multi_motor_job.motor[i].motor_id = _mulit_motor_struct.motor[i].values.;
+                multi_motor_job.motor[i].direction = _mulit_motor_struct.motor[i].values.direction;
+
+            }
+
+
+        }
     }
 };
 
@@ -46,7 +67,7 @@ int main(int argc, char **argv) {
         motor_topic_str = argv[1];
     }
 
-  HandleSelections hangle_selections(motor_topic_str);
+  HandleSelections handle_selections(motor_topic_str);
 
   ros::spin();
 

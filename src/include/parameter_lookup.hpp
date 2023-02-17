@@ -371,7 +371,7 @@ class ParameterLookUp
             return return_struct;
         }
 
-        dynamic_selection_values_struct getSelectionValues() {
+        dynamic_selection_values_struct getSelectionValues(dynamic_selection_struct _selection_parameters) {
             dynamic_reconfigure::ReconfigureResponse srv_resp;
             dynamic_reconfigure::ReconfigureRequest srv_req;
             ros::service::call("/dynamic_node/set_parameters", srv_req, srv_resp);
@@ -392,6 +392,67 @@ class ParameterLookUp
             return_struct.make_it_so = srv_resp.config.bools[_selection_parameters.indexes.make_it_so_index].value;
 
             return return_struct;
+        }
+
+        void resetDrinkSelection(dynamic_selection_struct selection_struct) {
+            dynamic_reconfigure::ReconfigureResponse srv_resp;
+            dynamic_reconfigure::ReconfigureRequest srv_req;
+            dynamic_reconfigure::BoolParameter temp_bool_parameter;
+            dynamic_reconfigure::IntParameter temp_int_parameter;
+            dynamic_reconfigure::DoubleParameter temp_double_parameter;
+            dynamic_reconfigure::Config conf;
+
+            temp_int_parameter.name = _selection_parameters.strings.drink_mode_str;
+            temp_int_parameter.value = 0;
+            conf.ints.push_back(temp_int_parameter);
+
+            temp_double_parameter.name = _selection_parameters.strings.liquid_0_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+
+            temp_double_parameter.name = _selection_parameters.strings.liquid_1_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+
+            temp_double_parameter.name = _selection_parameters.strings.liquid_2_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+
+            temp_double_parameter.name = _selection_parameters.strings.liquid_3_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+            
+            temp_double_parameter.name = _selection_parameters.strings.liquid_4_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+            
+            temp_double_parameter.name = _selection_parameters.strings.liquid_5_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+            
+            temp_double_parameter.name = _selection_parameters.strings.liquid_6_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+
+            temp_double_parameter.name = _selection_parameters.strings.liquid_7_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+            
+            temp_double_parameter.name = _selection_parameters.strings.liquid_8_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+            
+            temp_double_parameter.name = _selection_parameters.strings.liquid_9_str;
+            temp_double_parameter.value = 0.0;
+            conf.doubles.push_back(temp_double_parameter);
+
+            temp_bool_parameter.name = _selection_parameters.strings.make_it_so_str;
+            temp_bool_parameter.value = false;
+            conf.bools.push_back(temp_bool_parameter);
+
+            srv_req.config = conf;
+
+            ros::service::call("/dynamic_node/set_parameters", srv_req, srv_resp);
         }
 };
 
