@@ -61,17 +61,42 @@ class HandleSelections {
                                         selection_values.liquid_9
                                         };
 
+            double contributions_sum = 0.0;
+            double num_enabled_motors = 0.0;
+
             for (int i=0; i<10; i++) {
-                multi_motor_job.motor[i].motor_id = motor_values.motor[i].motor_id;
-                multi_motor_job.motor[i].direction = motor_values.motor[i].direction;
-                multi_motor_job.motor[i].use_ramping = motor_values.motor[i].use_ramping;
-                multi_motor_job.motor[i].job_id = selection_values.job_id;
-                multi_motor_job.motor[i].rpm = motor_values.motor[i].rpm;
-                multi_motor_job.motor[i].ramping_steps = motor_values.motor[i].ramping_steps;
-                multi_motor_job.motor[i].rotations = settings_values.motor_rotations_per_drink * contributions[i];
+                if (settings_values.enable[i]) {
+                    contributions_sum += contributions[i];
+                    num_enabled_motors += 1.0;
+                }
             }
 
-            motor_job_publisher.publish(multi_motor_job);
+            if (num_enabled_motors > 0.0) {       
+                for (int i=0; i<10; i++) {
+                    if (settings_values.enable[i]) {
+                        if (contributions_sum == 0.0) {  // All zeros for some reason, allocate an even portion to enables motors
+                            contributions[i] = (1 / num_enabled_motors) * settings_values.motor_rotations_per_drink;
+                        } else {
+                            contributions[i] = (contributions[i] / contributions_sum) * settings_values.motor_rotations_per_drink;
+                        }
+                    }
+                }
+
+                for (int i=0; i<10; i++) {
+                    multi_motor_job.motor[i].motor_id = motor_values.motor[i].motor_id;
+                    multi_motor_job.motor[i].direction = motor_values.motor[i].direction;
+                    multi_motor_job.motor[i].use_ramping = motor_values.motor[i].use_ramping;
+                    multi_motor_job.motor[i].job_id = selection_values.job_id;
+                    multi_motor_job.motor[i].rpm = motor_values.motor[i].rpm;
+                    multi_motor_job.motor[i].ramping_steps = motor_values.motor[i].ramping_steps;
+                    multi_motor_job.motor[i].rotations = contributions[i];
+                }
+
+                motor_job_publisher.publish(multi_motor_job);
+
+            } else {
+                ROS_INFO("Job created without any motors enabled");
+            }           
 
             pl.resetDrinkSelection(&_selection_parameters);
         }

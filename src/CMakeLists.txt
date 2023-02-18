@@ -130,3 +130,7 @@ target_link_libraries(dynamic_node ${catkin_LIBRARIES})
 add_executable(selections_node src/selections_node.cpp)
 add_dependencies(selections_node ${PROJECT_NAME}_gencfg)
 target_link_libraries(selections_node ${catkin_LIBRARIES})
+
+add_executable(track_dynamic_parameter_changes src/track_dynamic_parameter_changes.cpp)
+target_link_libraries(track_dynamic_parameter_changes ${catkin_LIBRARIES})
+add_dependencies(track_dynamic_parameter_changes ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
